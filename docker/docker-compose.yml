@@ -7,6 +7,7 @@ services:
   cypress-kitchensink:
     # Base image wiht node and pnpm. Ref. https://github.com/marcandreuf/base-images
     image: ghcr.io/marcandreuf/base-images/frontend-node22-pnpm:main
+    container_name: app-under-test-container
     volumes:
       - ${HOME}/.local/share/pnpm:/home/root/.local/share/pnpm
       - ../:/home/node/workspace
@@ -22,20 +23,32 @@ services:
       retries: 3
 
 
-  # Cypress Open with display setup
-  # cypress-dev-env:
-  #   image: "cypress/included:latest"
-  #   container_name: cypress-open-container
-  #   depends_on:
-  #     - cypress-kitchensink
-  #   environment:
-  #     - DISPLAY
-  #     - CYPRESS_baseUrl=http://localhost:8080
-  #   working_dir: /e2e
-  #   network_mode: host
-  #   entrypoint: ""
-  #   volumes:
-  #     - ../cypress-example-kitchensink:/e2e
-  #     - ~/.Xauthority:/root/.Xauthority:ro
-  #   #command: "open --detached --project . --config video=false"
-  #   command: /bin/sh -c "while sleep 1000; do :; done"
+  # This service is the Cypress GUI container.
+  # Cypress will be running with the official docker image with all the dependencies and all browsers installed.
+  # In this way we get a clean runtime test environment optimised for Cypress. 
+  cypress-dev-env:
+    #image: "cypress/included:latest"
+    build:
+      context: .
+      dockerfile: dockerfile-cypress-gui-pnpm
+    container_name: cypress-gui-container
+    depends_on:
+      - cypress-kitchensink
+    environment:
+      - DISPLAY
+      - CYPRESS_baseUrl=http://localhost:8080
+    working_dir: /e2e
+    network_mode: host
+    volumes:
+      - ../cypress-example-kitchensink:/e2e
+      - ~/.Xauthority:/root/.Xauthority:ro
+    #command: "open --detached --project . --config video=false"
+    #command: /bin/sh -c "while sleep 1000; do :; done"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

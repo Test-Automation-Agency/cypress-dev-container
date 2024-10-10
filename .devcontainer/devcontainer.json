@@ -1,23 +1,26 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/debian
 {
-  "name": "Cypress dev container",
-  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "name": "Cypress local dev environment",
   "dockerComposeFile": "../docker/docker-compose.yml",
   "service": "cypress-kitchensink",
+  // This is required to access the Cypress GUI inside the container.
   "initializeCommand": "echo Setting up env and xhost... && xhost",
   "workspaceFolder": "/home/node/workspace",
   "shutdownAction": "stopCompose",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  // For now I did not find any way to use .env files to properly pass the .gitconfig and ssh key files.
+  // TODO: Update the .gitconfig and ssh key files to match your host user setup.
   "mounts": [
     "source=/home/madpad/.gitconfig-maf,target=/home/node/.gitconfig,type=bind,consistency=cached",
     "source=/home/madpad/.ssh/id_ed25519,target=/home/node/.ssh/id_ed25519,type=bind,consistency=cached"
   ],
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
-  },
   "customizations": {
     "vscode": {
       "settings": {
+        // Prevent VS Code from suggesting more extensions when opening the project in a container.
         "extensions.ignoreRecommendations": true
       },
       "extensions": [
