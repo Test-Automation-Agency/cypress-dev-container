@@ -2,21 +2,24 @@ name: Poc Cypress Dev Container
 
 
 services:
-
-  #App Under test
+  # App Under test. For this example we use the kitchensink example from cypress.
+  # https://github.com/cypress-io/cypress-example-kitchensink
   cypress-kitchensink:
-    build:
-      context: .
-      dockerfile: dockerfile-cypress-base-pnpm
+    # Base image wiht node and pnpm. Ref. https://github.com/marcandreuf/base-images
+    image: ghcr.io/marcandreuf/base-images/frontend-node22-pnpm:main
     volumes:
       - ${HOME}/.local/share/pnpm:/home/root/.local/share/pnpm
-      - ../:/workspace
-    working_dir: /workspace
-    # network_mode: host
+      - ../:/home/node/workspace
     ports:
       - 8080:8080
-    #command: /bin/bash -c "cd cypress-example-kitchensink && pnpm install && pnpm run dev"
-    command: /bin/sh -c "while sleep 1000; do :; done"      
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 
   # Cypress Open with display setup

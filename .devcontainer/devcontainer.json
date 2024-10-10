@@ -6,7 +6,7 @@
   "dockerComposeFile": "../docker/docker-compose.yml",
   "service": "cypress-kitchensink",
   "initializeCommand": "echo Setting up env and xhost... && xhost",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/home/node/workspace",
   "shutdownAction": "stopCompose",
   "mounts": [
     "source=/home/madpad/.gitconfig-maf,target=/home/node/.gitconfig,type=bind,consistency=cached",
@@ -25,7 +25,6 @@
         "sourcegraph.cody-ai",
         "esbenp.prettier-vscode",
         "fallenmax.mithril-emmet"
-        //"wallabyjs.console-ninja" Not yet supported until 12/2024
       ]
     }
   }
