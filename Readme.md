@@ -13,6 +13,12 @@ The dev container loads the [docker/docker-compose.yml](docker/docker-compose.ym
 
 2. **Cypress GUI:** This is a containerized version of Cypress using the official image from Cypress. 
 
+
+# Prerequisites:
+
+This setup has been tested on an Ubuntu 22.04 LTS machine.
+
+
 # Run this example:
 
 ## 1. Load the dev container env. 
