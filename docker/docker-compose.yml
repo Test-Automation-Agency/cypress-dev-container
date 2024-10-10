@@ -1,0 +1,38 @@
+name: Poc Cypress Dev Container 
+
+
+services:
+
+  #App Under test
+  cypress-kitchensink:
+    build:
+      context: .
+      dockerfile: dockerfile-cypress-base-pnpm
+    volumes:
+      - ${HOME}/.local/share/pnpm:/home/root/.local/share/pnpm
+      - ../:/workspace
+    working_dir: /workspace
+    # network_mode: host
+    ports:
+      - 8080:8080
+    #command: /bin/bash -c "cd cypress-example-kitchensink && pnpm install && pnpm run dev"
+    command: /bin/sh -c "while sleep 1000; do :; done"      
+
+
+  # Cypress Open with display setup
+  # cypress-dev-env:
+  #   image: "cypress/included:latest"
+  #   container_name: cypress-open-container
+  #   depends_on:
+  #     - cypress-kitchensink
+  #   environment:
+  #     - DISPLAY
+  #     - CYPRESS_baseUrl=http://localhost:8080
+  #   working_dir: /e2e
+  #   network_mode: host
+  #   entrypoint: ""
+  #   volumes:
+  #     - ../cypress-example-kitchensink:/e2e
+  #     - ~/.Xauthority:/root/.Xauthority:ro
+  #   #command: "open --detached --project . --config video=false"
+  #   command: /bin/sh -c "while sleep 1000; do :; done"

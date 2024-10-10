@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+  "name": "Cypress dev container",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "dockerComposeFile": "../docker/docker-compose.yml",
+  "service": "cypress-kitchensink",
+  "initializeCommand": "echo Setting up env and xhost... && xhost",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "mounts": [
+    "source=/home/madpad/.gitconfig-maf,target=/home/node/.gitconfig,type=bind,consistency=cached",
+    "source=/home/madpad/.ssh/id_ed25519,target=/home/node/.ssh/id_ed25519,type=bind,consistency=cached"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "extensions.ignoreRecommendations": true
+      },
+      "extensions": [
+        "mhutchie.git-graph",
+        "sourcegraph.cody-ai",
+        "esbenp.prettier-vscode",
+        "fallenmax.mithril-emmet"
+        //"wallabyjs.console-ninja" Not yet supported until 12/2024
+      ]
+    }
+  }
+}
