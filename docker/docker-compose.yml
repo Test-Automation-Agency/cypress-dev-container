@@ -42,8 +42,6 @@ services:
     volumes:
       - ../cypress-example-kitchensink:/e2e
       - ~/.Xauthority:/root/.Xauthority:ro
-    #command: "open --detached --project . --config video=false"
-    #command: /bin/sh -c "while sleep 1000; do :; done"
     stdin_open: true
     tty: true
     restart: unless-stopped
