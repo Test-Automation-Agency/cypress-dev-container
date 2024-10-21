@@ -2,6 +2,7 @@
 
 ## This repository is configuration dev-containers for a consistent local development environment to implement a web app and Cypress tests.
 
+> Blog post explaining more about this repo: https://testautomationagency.com/cdc
 
 This setup of a local environment has the beneits to run Cypress tests in a consistent environment that is exactly the same as all the other developers, CI, and other environments.
 
